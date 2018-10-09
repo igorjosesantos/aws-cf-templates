@@ -89,7 +89,7 @@ widdix list --region=us-east-1
 
 ### Graph
 
-![Graph](graph.png)
+![Graph](./img/widdix-graph.png)
 
 To generate a graph in [DOT](https://graphviz.gitlab.io/_pages/doc/info/lang.html) format of your stacks in an AWS account, run:
 

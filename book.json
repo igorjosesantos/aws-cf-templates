@@ -1,0 +1,11 @@
+{
+  "root": "./docs",
+  "plugins": [
+    "versions"
+  ],
+  "pluginsConfig": {
+    "versions": {
+      "type": "tags"
+    }
+  }
+}

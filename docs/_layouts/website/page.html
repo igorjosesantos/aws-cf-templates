@@ -1,0 +1,13 @@
+<!-- based on https://github.com/GitbookIO/theme-default/blob/master/_layouts/website/page.html -->
+
+{% extends template.self %}
+
+{% block book_sidebar %}
+  <div style="padding: 10px; text-align: center"><iframe src="https://ghbtns.com/github-btn.html?user=widdix&repo=aws-cf-templates&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe></div>
+  {{ super() }}
+{% endblock %}
+
+{% block page %}
+  {{ super() }}
+  A <a href="https://cloudonaut.io">cloudonaut.io</a> project. Engineered by <a href="https://widdix.net">widdix</a>.
+{% endblock %}

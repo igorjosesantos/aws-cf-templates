@@ -1,0 +1,20 @@
+# Summary
+
+* [Introduction](README.md)
+* Templates
+  * [EC2](ec2.md)
+  * [ECS](ecs.md)
+  * [Jenkins](jenkins.md)
+  * [Operations](operations.md)
+  * [Security](security.md)
+  * [State / Data](state.md)
+  * [Static Website](static-website.md)
+  * [VPC](vpc.md)
+  * [WordPress](wordpress.md)
+* Tooling
+  * [widdix CLI](cli.md)
+* Migration Guides
+  * [Migrate to v7](migrate-v7.md)
+  * [Migrate to v6](migrate-v6.md)
+  * [Migrate to v5](migrate-v5.md)
+  * [Migrate to v4](migrate-v4.md)

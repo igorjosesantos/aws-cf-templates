@@ -1,8 +1,6 @@
-<iframe src="https://ghbtns.com/github-btn.html?user=widdix&repo=aws-cf-templates&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+# Operations
 
-> **New**: Manage Free Templates for AWS CloudFormation with the [widdix CLI](./cli/)
-
-# Alert topic
+## `operations/alert` - Alert topic
 This template describes a SNS topic that can be used by many other templates to receive alerts. You can add one or multiple subscribers to this topic and they will all receive the same alerts. Supported transports are:
 * Email
 * HTTP endpoint
@@ -10,7 +8,7 @@ This template describes a SNS topic that can be used by many other templates to 
 
 ![Architecture](./img/operations-alert.png)
 
-## marbot
+### marbot
 
 ![marbot](https://marbot.io/assets/marbot.png)
 
@@ -28,8 +26,8 @@ I add links to AWS Management Console that are relevant to an incident. Contextu
 
 [Try marbot for free now!](https://marbot.io/?utm_source=templates&utm_medium=doc&utm_campaign=operations)
 
-## Installation Guide
-1. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-alert&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/__VERSION__/operations/alert.yaml)
+### Installation Guide
+1. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-alert&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/{{ version }}/operations/alert.yaml)
 1. Click **Next** to proceed with the next step of the wizard.
 1. Specify a name and all parameters for the stack.
 1. Click **Next** to proceed with the next step of the wizard.
@@ -38,15 +36,15 @@ I add links to AWS Management Console that are relevant to an incident. Contextu
 1. Click **Create** to start the creation of the stack.
 1. Wait until the stack reaches the state **CREATE_COMPLETE**
 
-# Backup DynamoDB (Data Pipeline & EMR)
+## `operations/backup-dynamodb` - Backup DynamoDB (Data Pipeline & EMR)
 This template describes a Data Pipeline to backup a single DynamoDB table. The Data Pipeline will spin up a EMR cluster to do the backup.
 
-> Deprecated in v7, will be removed in v8, use `operations/backup-dynamodb-native.yaml` instead!
+> Deprecated in v7, will be removed in v8, use `operations/backup-dynamodb-native` instead!
 
-## Installation Guide
-1. This templates depends on our [`vpc-*azs.yaml`](./vpc/) template. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=vpc-2azs&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/__VERSION__/vpc/vpc-2azs.yaml)
-1. This templates depends on our `alert.yaml` template. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-alert&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/__VERSION__/operations/alert.yaml)
-1. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-backup-dynamodb&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/__VERSION__/operations/backup-dynamodb.yaml)
+### Installation Guide
+1. This templates depends on our [`vpc/vpc-*azs`](vpc.md) template. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=vpc-2azs&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/{{ version }}/vpc/vpc-2azs.yaml)
+1. This templates depends on our `alert.yaml` template. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-alert&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/{{ version }}/operations/alert.yaml)
+1. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-backup-dynamodb&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/{{ version }}/operations/backup-dynamodb.yaml)
 1. Click **Next** to proceed with the next step of the wizard.
 1. Specify a name and all parameters for the stack.
 1. Click **Next** to proceed with the next step of the wizard.
@@ -55,18 +53,18 @@ This template describes a Data Pipeline to backup a single DynamoDB table. The D
 1. Click **Create** to start the creation of the stack.
 1. Wait until the stack reaches the state **CREATE_COMPLETE**
 
-## Dependencies
+### Dependencies
 * `vpc/vpc-*azs.yaml` (**required**)
 * `operations/alert.yaml` (**required**)
 
-## Limitations
+### Limitations
 * The EMR cluster will only run in a single subnet (`SubnetAPublic`)
 
-# Backup DynamoDB (native)
+## `operations/backup-dynamodb-native` - Backup DynamoDB (native)
 This template describes a Lambda function to backup a single DynamoDB table daily.
 
-## Installation Guide
-1. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-backup-dynamodb-native&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/__VERSION__/operations/backup-dynamodb-native.yaml)
+### Installation Guide
+1. [![Launch Stack](./img/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=operations-backup-dynamodb-native&templateURL=https://s3-eu-west-1.amazonaws.com/widdix-aws-cf-templates-releases-eu-west-1/{{ version }}/operations/backup-dynamodb-native.yaml)
 1. Click **Next** to proceed with the next step of the wizard.
 1. Specify a name and all parameters for the stack.
 1. Click **Next** to proceed with the next step of the wizard.
@@ -75,5 +73,5 @@ This template describes a Lambda function to backup a single DynamoDB table dail
 1. Click **Create** to start the creation of the stack.
 1. Wait until the stack reaches the state **CREATE_COMPLETE**
 
-## Dependencies
+### Dependencies
 * `operations/alert.yaml` (recommended)
