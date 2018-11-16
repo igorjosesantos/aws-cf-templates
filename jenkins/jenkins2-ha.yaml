@@ -101,7 +101,7 @@ Parameters:
     Type: String
     NoEcho: true
     MinLength: 8
-    MaxLength: 32
+    MaxLength: 34
   MasterLogsRetentionInDays:
     Description: 'Specifies the number of days you want to retain log events in the specified log group.'
     Type: Number
@@ -906,6 +906,11 @@ Outputs:
     Value: admin
     Export:
       Name: !Sub '${AWS::StackName}-AdminUsername'
+  ELBArn:
+    Description: 'The ARN for the Jenkins Master load balancer.'
+    Value: !Ref MasterELB
+    Export:
+      Name: !Sub '${AWS::StackName}-ELBArn'
   DNSName:
     Description: 'The DNS name for the Jenkins Master load balancer.'
     Value: !GetAtt 'MasterELB.DNSName'
