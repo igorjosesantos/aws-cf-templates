@@ -1681,7 +1681,7 @@ Resources:
             'c_mkdir':
               command: 'mkdir /var/lib/jenkins && chown -R jenkins:jenkins /var/lib/jenkins'
               test: '[ ! -d /var/lib/jenkins ]'
-            'c_sudoers':
+            'd_sudoers':
               command: 'echo "jenkins ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/jenkins'
               test: '[ ! -f /etc/sudoers.d/jenkins ]'
           services:
@@ -2110,6 +2110,21 @@ Outputs:
     Value: admin
     Export:
       Name: !Sub '${AWS::StackName}-AdminUsername'
+  MasterASG:
+    Description: 'Jenkins master auto-scaling group.'
+    Value: !Ref MasterASG
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterASG'
+  MasterELBSG:
+    Description: 'ELB security group.'
+    Value: !Ref MasterELBSG
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterELBSG'
+  MasterTargetGroupArn:
+    Description: 'The ARN for the Jenkins master target group.'
+    Value: !Ref MasterELBTargetGroup
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterTargetGroupArn'
   ELBArn:
     Description: 'The ARN for the Jenkins Master load balancer.'
     Value: !Ref MasterELB
