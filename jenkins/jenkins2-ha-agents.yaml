@@ -2110,16 +2110,21 @@ Outputs:
     Value: admin
     Export:
       Name: !Sub '${AWS::StackName}-AdminUsername'
-  MasterSG:
-    Description: 'Jenkins master internal security group.'
-    Value: !Ref MasterSG
+  AgentASG:
+    Description: 'Jenkins agent(s) auto-scaling group.'
+    Value: !Ref AgentASG
     Export:
-      Name: !Sub '${AWS::StackName}-MasterSG'
+      Name: !Sub '${AWS::StackName}-AgentASG'
   MasterASG:
     Description: 'Jenkins master auto-scaling group.'
     Value: !Ref MasterASG
     Export:
       Name: !Sub '${AWS::StackName}-MasterASG'
+  MasterSG:
+    Description: 'Jenkins master internal security group.'
+    Value: !Ref MasterSG
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterSG'
   MasterELBSG:
     Description: 'ELB security group.'
     Value: !Ref MasterELBSG
