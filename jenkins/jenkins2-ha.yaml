@@ -906,6 +906,11 @@ Outputs:
     Value: admin
     Export:
       Name: !Sub '${AWS::StackName}-AdminUsername'
+  MasterStorage:
+    Description: 'EFS storage Id.'
+    Value: !Ref MasterStorage
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterStorage'
   MasterSG:
     Description: 'Jenkins master internal security group.'
     Value: !Ref MasterSG

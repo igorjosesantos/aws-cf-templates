@@ -2107,6 +2107,11 @@ Outputs:
     Value: admin
     Export:
       Name: !Sub '${AWS::StackName}-AdminUsername'
+  MasterStorage:
+    Description: 'EFS storage Id.'
+    Value: !Ref MasterStorage
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterStorage'
   AgentASG:
     Description: 'Jenkins agent(s) auto-scaling group.'
     Value: !Ref AgentASG
