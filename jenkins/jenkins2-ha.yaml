@@ -916,6 +916,11 @@ Outputs:
     Value: !Ref MasterSG
     Export:
       Name: !Sub '${AWS::StackName}-MasterSG'
+  MasterStorageSG:
+    Description: 'Jenkins master storage security group.'
+    Value: !Ref MasterStorageSG
+    Export:
+      Name: !Sub '${AWS::StackName}-MasterStorageSG'
   MasterASG:
     Description: 'Jenkins master auto-scaling group.'
     Value: !Ref MasterASG
