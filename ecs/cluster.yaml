@@ -1473,3 +1473,13 @@ Outputs:
     Value: !Sub 'http://${LoadBalancer.DNSName}'
     Export:
       Name: !Sub '${AWS::StackName}-URL'
+  AutoScalingGroup:
+    Description: 'Auto scaling group Id'
+    Value: !Ref 'AutoScalingGroup'
+    Export:
+      Name: !Sub '${AWS::StackName}-AutoScalingGroup'
+  InstanceProfileRole:
+    Description: 'Instance profile role Id.'
+    Value: !Ref 'Role'
+    Export:
+      Name: !Sub '${AWS::StackName}-InstanceProfileRole'
