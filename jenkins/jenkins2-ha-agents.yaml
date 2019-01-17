@@ -1948,11 +1948,11 @@ Resources:
         PropagateAtLaunch: true
     CreationPolicy:
       ResourceSignal:
-        Timeout: PT10M
+        Timeout: PT15M
         Count: !If [HasZeroAgents, 0, 1]
     UpdatePolicy:
       AutoScalingRollingUpdate:
-        PauseTime: PT10M
+        PauseTime: PT15M
         SuspendProcesses:
         - HealthCheck
         - ReplaceUnhealthy
