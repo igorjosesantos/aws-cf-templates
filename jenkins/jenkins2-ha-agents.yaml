@@ -192,12 +192,12 @@ Parameters:
     Default: 'jenkins.'
 Mappings:
   RegionMap:
+    'eu-north-1':
+      AMI: 'ami-6d27a913'
     'ap-south-1':
       AMI: 'ami-0937dcc711d38ef3f'
     'eu-west-3':
       AMI: 'ami-0854d53ce963f69d8'
-    'eu-north-1':
-      AMI: 'ami-6d27a913'
     'eu-west-2':
       AMI: 'ami-0664a710233d7c148'
     'eu-west-1':
@@ -1043,6 +1043,10 @@ Resources:
               mode: '000500'
               owner: root
               group: root
+          commands:
+            'a_disable_ssm_agent_if_enabled':
+              command: 'systemctl disable amazon-ssm-agent.service'
+              test: 'systemctl is-enabled amazon-ssm-agent.service'
           services:
             sysvinit:
               cfn-hup:
@@ -1690,6 +1694,9 @@ Resources:
             'c_mkdir':
               command: 'mkdir /var/lib/jenkins && chown -R jenkins:jenkins /var/lib/jenkins'
               test: '[ ! -d /var/lib/jenkins ]'
+            'd_disable_ssm_agent_if_enabled':
+              command: 'systemctl disable amazon-ssm-agent.service'
+              test: 'systemctl is-enabled amazon-ssm-agent.service'
           services:
             sysvinit:
               cfn-hup:

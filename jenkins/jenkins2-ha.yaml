@@ -132,12 +132,12 @@ Parameters:
     Default: 'jenkins.'
 Mappings:
   RegionMap:
+    'eu-north-1':
+      AMI: 'ami-6d27a913'
     'ap-south-1':
       AMI: 'ami-0937dcc711d38ef3f'
     'eu-west-3':
       AMI: 'ami-0854d53ce963f69d8'
-    'eu-north-1':
-      AMI: 'ami-6d27a913'
     'eu-west-2':
       AMI: 'ami-0664a710233d7c148'
     'eu-west-1':
