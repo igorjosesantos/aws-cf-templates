@@ -813,6 +813,7 @@ Resources:
           packages:
             yum:
               'nfs-utils': []
+              'ruby': []
           commands:
             'a_groupadd':
               command: 'groupadd -g 497 jenkins'
@@ -1042,15 +1043,18 @@ Resources:
             'a_disable_ssm_agent_if_enabled':
               command: 'systemctl disable amazon-ssm-agent.service'
               test: 'systemctl is-enabled amazon-ssm-agent.service'
-            'b_install_ruby':
+            'b_upgrade_ruby':
               command: |
+                while pgrep yum; do sleep 5s; done
                 amazon-linux-extras install -y ruby2.4
                 alternatives --set ruby /usr/bin/ruby2.4
+                [[ $(ruby --version) =~ 2\.4 ]]
             'c_install_ruby_gems':
               command: |
-                gem install aws-sdk-autoscaling -v 1.13.0
-                gem install aws-sdk-sqs -v 1.10.0
-                gem install daemons -v 1.2.6
+                while pgrep gem; do sleep 5s; done
+                gem install --no-document aws-sdk-autoscaling -v 1.13.0
+                gem install --no-document aws-sdk-sqs -v 1.10.0
+                gem install --no-document daemons -v 1.2.6
           services:
             sysvinit:
               cfn-hup:
@@ -1716,6 +1720,7 @@ Resources:
           packages:
             yum:
               'nfs-utils': []
+              'ruby': []
           files:
             '/root/agent.xml':
               content: |
@@ -1876,15 +1881,18 @@ Resources:
               owner: root
               group: root
           commands:
-            'a_install_ruby':
+            'a_upgrade_ruby':
               command: |
+                while pgrep yum; do sleep 5s; done
                 amazon-linux-extras install -y ruby2.4
                 alternatives --set ruby /usr/bin/ruby2.4
+                [[ $(ruby --version) =~ 2\.4 ]]
             'b_install_ruby_gems':
               command: |
-                gem install aws-sdk-autoscaling -v 1.13.0
-                gem install aws-sdk-sqs -v 1.10.0
-                gem install daemons -v 1.2.6
+                while pgrep gem; do sleep 5s; done
+                gem install --no-document aws-sdk-autoscaling -v 1.13.0
+                gem install --no-document aws-sdk-sqs -v 1.10.0
+                gem install --no-document daemons -v 1.2.6
             'c_download_remoting_jar':
               command: '/root/download.sh'
               cwd: '/var/lib/jenkins'
