@@ -813,11 +813,6 @@ Resources:
           packages:
             yum:
               'nfs-utils': []
-              'ruby': []
-            rubygems:
-              'aws-sdk-autoscaling': ['1.13.0']
-              'aws-sdk-sqs': ['1.10.0']
-              daemons: ['1.2.6']
           commands:
             'a_groupadd':
               command: 'groupadd -g 497 jenkins'
@@ -1047,6 +1042,15 @@ Resources:
             'a_disable_ssm_agent_if_enabled':
               command: 'systemctl disable amazon-ssm-agent.service'
               test: 'systemctl is-enabled amazon-ssm-agent.service'
+            'b_install_ruby':
+              command: |
+                amazon-linux-extras install -y ruby2.4
+                alternatives --set ruby /usr/bin/ruby2.4
+            'c_install_ruby_gems':
+              command: |
+                gem install aws-sdk-autoscaling -v 1.13.0
+                gem install aws-sdk-sqs -v 1.10.0
+                gem install daemons -v 1.2.6
           services:
             sysvinit:
               cfn-hup:
@@ -1712,11 +1716,6 @@ Resources:
           packages:
             yum:
               'nfs-utils': []
-              'ruby': []
-            rubygems:
-              'aws-sdk-autoscaling': ['1.13.0']
-              'aws-sdk-ec2': ['1.62.0']
-              daemons: ['1.2.6']
           files:
             '/root/agent.xml':
               content: |
@@ -1877,11 +1876,20 @@ Resources:
               owner: root
               group: root
           commands:
-            'a_download_remoting_jar':
+            'a_install_ruby':
+              command: |
+                amazon-linux-extras install -y ruby2.4
+                alternatives --set ruby /usr/bin/ruby2.4
+            'b_install_ruby_gems':
+              command: |
+                gem install aws-sdk-autoscaling -v 1.13.0
+                gem install aws-sdk-sqs -v 1.10.0
+                gem install daemons -v 1.2.6
+            'c_download_remoting_jar':
               command: '/root/download.sh'
               cwd: '/var/lib/jenkins'
               test: '[ ! -f /var/lib/jenkins/remoting.jar ]'
-            'b_create_agent':
+            'd_create_agent':
               command: '/root/create-agent.sh'
               cwd: '/var/lib/jenkins'
               test: 'if /root/check-agent.sh; then exit 1; else exit 0; fi'
