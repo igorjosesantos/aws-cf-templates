@@ -335,9 +335,9 @@ Resources:
       MetricName: HTTPCode_ELB_5XX_Count
       Statistic: Sum
       Period: 60
-      EvaluationPeriods: 1
+      EvaluationPeriods: 2
       ComparisonOperator: GreaterThanThreshold
-      Threshold: 3
+      Threshold: 5
       AlarmActions:
       - {'Fn::ImportValue': !Sub '${ParentAlertStack}-TopicARN'}
       Dimensions:
@@ -352,9 +352,9 @@ Resources:
       MetricName: HTTPCode_Target_5XX_Count
       Statistic: Sum
       Period: 60
-      EvaluationPeriods: 1
+      EvaluationPeriods: 2
       ComparisonOperator: GreaterThanThreshold
-      Threshold: 0
+      Threshold: 5
       AlarmActions:
       - {'Fn::ImportValue': !Sub '${ParentAlertStack}-TopicARN'}
       Dimensions:
