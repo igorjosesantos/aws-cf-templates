@@ -1046,15 +1046,15 @@ Resources:
             'b_upgrade_ruby':
               command: |
                 while pgrep yum; do sleep 5s; done
-                amazon-linux-extras install -y ruby2.4
+                while ! amazon-linux-extras install -y ruby2.4; do sleep 5s; done
                 alternatives --set ruby /usr/bin/ruby2.4
                 [[ $(ruby --version) =~ 2\.4 ]]
             'c_install_ruby_gems':
               command: |
                 while pgrep gem; do sleep 5s; done
-                gem install --no-document aws-sdk-autoscaling -v 1.13.0
-                gem install --no-document aws-sdk-sqs -v 1.10.0
-                gem install --no-document daemons -v 1.2.6
+                while ! gem install --no-document aws-sdk-autoscaling -v 1.13.0; do sleep 5s; done
+                while ! gem install --no-document aws-sdk-sqs -v 1.10.0; do sleep 5s; done
+                while ! gem install --no-document daemons -v 1.2.6; do sleep 5s; done
           services:
             sysvinit:
               cfn-hup:
@@ -1884,15 +1884,15 @@ Resources:
             'a_upgrade_ruby':
               command: |
                 while pgrep yum; do sleep 5s; done
-                amazon-linux-extras install -y ruby2.4
+                while ! amazon-linux-extras install -y ruby2.4; do sleep 5s; done
                 alternatives --set ruby /usr/bin/ruby2.4
                 [[ $(ruby --version) =~ 2\.4 ]]
             'b_install_ruby_gems':
               command: |
                 while pgrep gem; do sleep 5s; done
-                gem install --no-document aws-sdk-autoscaling -v 1.13.0
-                gem install --no-document aws-sdk-sqs -v 1.10.0
-                gem install --no-document daemons -v 1.2.6
+                while ! gem install --no-document aws-sdk-autoscaling -v 1.13.0; do sleep 5s; done
+                while ! gem install --no-document aws-sdk-sqs -v 1.10.0; do sleep 5s; done
+                while ! gem install --no-document daemons -v 1.2.6; do sleep 5s; done
             'c_download_remoting_jar':
               command: '/root/download.sh'
               cwd: '/var/lib/jenkins'
