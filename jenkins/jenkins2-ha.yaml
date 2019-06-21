@@ -130,40 +130,42 @@ Parameters:
     Description: 'Name that is used to create the DNS entry with trailing dot, e.g. §{SubDomainNameWithDot}§{HostedZoneName}. Leave blank for naked (or apex and bare) domain. Requires ParentZoneStack parameter!'
     Type: String
     Default: 'jenkins.'
+# regions=$(aws ec2 describe-regions --query "Regions[].RegionName" --output text)
+# for region in $regions; do ami=$(aws ssm get-parameter --name /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2 --region $region | jq -r .Parameter.Value); printf "'$region':\n  AMI: '$ami'\n"; done
 Mappings:
   RegionMap:
     'eu-north-1':
-      AMI: 'ami-6d27a913'
+      AMI: 'ami-6e2ba310'
     'ap-south-1':
-      AMI: 'ami-0937dcc711d38ef3f'
+      AMI: 'ami-0b3046001e1ba9a99'
     'eu-west-3':
-      AMI: 'ami-0854d53ce963f69d8'
+      AMI: 'ami-07d80b16fe4b2de61'
     'eu-west-2':
-      AMI: 'ami-0664a710233d7c148'
+      AMI: 'ami-08afc3105ef372053'
     'eu-west-1':
-      AMI: 'ami-0fad7378adf284ce0'
+      AMI: 'ami-01f3682deed220c2a'
     'ap-northeast-2':
-      AMI: 'ami-018a9a930060d38aa'
+      AMI: 'ami-0c28c81fda53dcb86'
     'ap-northeast-1':
-      AMI: 'ami-0d7ed3ddb85b521a6'
+      AMI: 'ami-084040f99a74ce8c3'
     'sa-east-1':
-      AMI: 'ami-0b04450959586da29'
+      AMI: 'ami-083cd84588c53dffa'
     'ca-central-1':
-      AMI: 'ami-0de8b8e4bc1f125fe'
+      AMI: 'ami-0827e3df5a5cdb6a6'
     'ap-southeast-1':
-      AMI: 'ami-04677bdaa3c2b6e24'
+      AMI: 'ami-0602ae7e6b9191aea'
     'ap-southeast-2':
-      AMI: 'ami-0c9d48b5db609ad6e'
+      AMI: 'ami-0c1d8842b9bfc767c'
     'eu-central-1':
-      AMI: 'ami-0eaec5838478eb0ba'
+      AMI: 'ami-0cd855c8009cb26ef'
     'us-east-1':
-      AMI: 'ami-035be7bafff33b6b6'
+      AMI: 'ami-0cc96feef8c6bbff3'
     'us-east-2':
-      AMI: 'ami-04328208f4f0cf1fe'
+      AMI: 'ami-00c79db59589996b9'
     'us-west-1':
-      AMI: 'ami-0799ad445b5727125'
+      AMI: 'ami-0ce5ae170b49e3870'
     'us-west-2':
-      AMI: 'ami-032509850cf9ee54e'
+      AMI: 'ami-07669fc90e6e6cc47'
 Conditions:
   HasKeyName: !Not [!Equals [!Ref KeyName, '']]
   HasIAMUserSSHAccess: !Equals [!Ref IAMUserSSHAccess, 'true']
