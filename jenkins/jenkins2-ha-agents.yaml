@@ -1918,7 +1918,8 @@ Resources:
             'b_mountpoint_mount':
               command: !Sub |
                 while ! (echo > /dev/tcp/${MasterStorage}.efs.${AWS::Region}.amazonaws.com/2049) >/dev/null 2>&1; do sleep 10; done\
-                  && sleep 10 && mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2\
+                  && sleep 10 && mkdir -p /mnt/agent-state && chown -R jenkins:jenkins /mnt/agent-state\
+                  && mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2\
                   "${MasterStorage}.efs.${AWS::Region}.amazonaws.com:/agent-state" /mnt/agent-state
               test: 'if mount | grep -q /mnt/agent-state; then exit 1; else exit 0; fi'
           services:
