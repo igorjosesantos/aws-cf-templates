@@ -1466,6 +1466,17 @@ Resources:
       FromPort: 22
       ToPort: 22
       CidrIp: '0.0.0.0/0'
+
+  # required for Jenkins EC2-Cloud plugin (legacy build agents)
+  AgentSGInMaster:
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      GroupId: !Ref AgentSG
+      IpProtocol: tcp
+      FromPort: 22
+      ToPort: 22
+      SourceSecurityGroupId: !Ref MasterSG
+
   AgentLogs:
     Type: 'AWS::Logs::LogGroup'
     Properties:
