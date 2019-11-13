@@ -104,11 +104,15 @@ Parameters:
   PreferredBackupWindow:
     Description: 'The daily time range in UTC during which you want to create automated backups.'
     Type: String
-    Default: '09:54-10:24'
+    # can't update stack after setting this
+    #Default: '09:54-10:24'
+    Default: ''
   PreferredMaintenanceWindow:
     Description: The weekly time range (in UTC) during which system maintenance can occur.
     Type: String
-    Default: 'sat:07:00-sat:07:30'
+    # can't update stack after setting this
+    #Default: 'sat:07:00-sat:07:30'
+    Default: ''
   AutoPause:
     Description: 'Enable automatic pause for a Serverless Aurora cluster. A cluster can be paused only when it has no connections. If a cluster is paused for more than seven days, the cluster might be backed up with a snapshot. In this case, the cluster is restored when there is a request to connect to it.'
     Type: String
