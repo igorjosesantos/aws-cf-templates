@@ -104,15 +104,11 @@ Parameters:
   PreferredBackupWindow:
     Description: 'The daily time range in UTC during which you want to create automated backups.'
     Type: String
-    # can't update stack after setting this
-    #Default: '09:54-10:24'
-    Default: ''
+    Default: '09:54-10:24'
   PreferredMaintenanceWindow:
     Description: The weekly time range (in UTC) during which system maintenance can occur.
     Type: String
-    # can't update stack after setting this
-    #Default: 'sat:07:00-sat:07:30'
-    Default: ''
+    Default: 'sat:07:00-sat:07:30'
   AutoPause:
     Description: 'Enable automatic pause for a Serverless Aurora cluster. A cluster can be paused only when it has no connections. If a cluster is paused for more than seven days, the cluster might be backed up with a snapshot. In this case, the cluster is restored when there is a request to connect to it.'
     Type: String
@@ -126,8 +122,8 @@ Parameters:
   MinCapacity:
     Description: 'The minimum capacity units for a Serverless Aurora cluster.'
     Type: String
-    AllowedValues: [2, 4, 8, 16, 32, 64, 128, 256]
-    Default: 2
+    AllowedValues: [1, 2, 4, 8, 16, 32, 64, 128, 256]
+    Default: 1
   SecondsUntilAutoPause:
     Description: 'The time, in seconds, before a Serverless Aurora cluster is paused.'
     Type: Number
@@ -213,7 +209,8 @@ Resources:
       MasterUsername: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUsername]
       MasterUserPassword: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUserPassword]
       Port: !FindInMap [EngineMap, !Ref Engine, Port]
-      PreferredBackupWindow: !Ref PreferredBackupWindow
+      # https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Modifying.html
+      #PreferredBackupWindow: !Ref PreferredBackupWindow
       PreferredMaintenanceWindow: !Ref PreferredMaintenanceWindow
       ScalingConfiguration:
         AutoPause: !Ref AutoPause
