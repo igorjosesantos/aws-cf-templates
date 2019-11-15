@@ -122,7 +122,7 @@ Parameters:
     Description: 'The minimum capacity units for a Serverless Aurora cluster.'
     Type: String
     AllowedValues: [1, 2, 4, 8, 16, 32, 64, 128, 256]
-    Default: 2
+    Default: 1
   SecondsUntilAutoPause:
     Description: 'The time, in seconds, before a Serverless Aurora cluster is paused.'
     Type: Number
@@ -213,6 +213,7 @@ Resources:
       MasterUserPassword: !If [HasDBSnapshotIdentifier, !Ref 'AWS::NoValue', !Ref DBMasterUserPassword]
       # PreferredBackupWindow: !Ref PreferredBackupWindow TODO re-enable as soon as CloudFormation bug ix fixed
       # PreferredMaintenanceWindow: !Ref PreferredMaintenanceWindow TODO re-enable as soon as CloudFormation bug ix fixed
+      Port: !FindInMap [EngineMap, !Ref Engine, Port]
       ScalingConfiguration:
         AutoPause: !Ref AutoPause
         MaxCapacity: !Ref MaxCapacity

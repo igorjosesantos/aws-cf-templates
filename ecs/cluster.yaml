@@ -537,13 +537,13 @@ Resources:
   DefaultTargetGroup: # this is used as the fall-back target group and is used to health checking the ECS agent. Services use their own ListenerRules to accept traffic based on path prefixes.
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
     Properties:
-      HealthCheckIntervalSeconds: 15
+      HealthCheckIntervalSeconds: 60
       HealthCheckPort: '51678'
       HealthCheckPath: '/'
       HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 10
+      HealthCheckTimeoutSeconds: 15
       HealthyThresholdCount: 2
-      UnhealthyThresholdCount: 2
+      UnhealthyThresholdCount: 10
       Matcher:
         HttpCode: '200-299'
       Port: 80 # port 80 is a reserved port that is never used by the agent, so we are safe to use it here
@@ -1522,3 +1522,13 @@ Outputs:
     Value: !Sub 'http://${LoadBalancer.DNSName}'
     Export:
       Name: !Sub '${AWS::StackName}-URL'
+  AutoScalingGroup:
+    Description: 'Auto scaling group Id'
+    Value: !Ref 'AutoScalingGroup'
+    Export:
+      Name: !Sub '${AWS::StackName}-AutoScalingGroup'
+  InstanceProfileRole:
+    Description: 'Instance profile role Id.'
+    Value: !Ref 'Role'
+    Export:
+      Name: !Sub '${AWS::StackName}-InstanceProfileRole'
