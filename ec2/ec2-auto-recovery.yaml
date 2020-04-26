@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'EC2: instance with auto-recovery, a cloudonaut.io template'
+Description: 'EC2: instance with auto-recovery, a cloudonaut.io template (Deprecated in v11, will be removed in v13! Use ec2/al2-mutable-public or ec2/al2-mutable-private instead.)'
 Metadata:
   'AWS::CloudFormation::Interface':
     ParameterGroups:
@@ -40,8 +40,11 @@ Metadata:
       - SubDomainNameWithDot
       - UserData
       - IngressTcpPort1
+      - IngressTcpParentClientStack1
       - IngressTcpPort2
+      - IngressTcpParentClientStack2
       - IngressTcpPort3
+      - IngressTcpParentClientStack3
       - ManagedPolicyArns
 Parameters:
   ParentVPCStack:
@@ -127,12 +130,24 @@ Parameters:
     Description: 'Optional port allowing ingress TCP traffic.'
     Type: String
     Default: ''
+  IngressTcpParentClientStack1:
+    Description: 'Optional stack name of parent Client Security Group stack based on state/client-sg.yaml that is required to access IngressTcpPort1 (if you leave this blank, IngressTcpPort1 is open to the world 0.0.0.0/0).'
+    Type: String
+    Default: ''
   IngressTcpPort2:
     Description: 'Optional port allowing ingress TCP traffic.'
     Type: String
     Default: ''
+  IngressTcpParentClientStack2:
+    Description: 'Optional stack name of parent Client Security Group stack based on state/client-sg.yaml that is required to access IngressTcpPort2 (if you leave this blank, IngressTcpPort2 is open to the world 0.0.0.0/0).'
+    Type: String
+    Default: ''
   IngressTcpPort3:
     Description: 'Optional port allowing ingress TCP traffic.'
+    Type: String
+    Default: ''
+  IngressTcpParentClientStack3:
+    Description: 'Optional stack name of parent Client Security Group stack based on state/client-sg.yaml that is required to access IngressTcpPort3 (if you leave this blank, IngressTcpPort3 is open to the world 0.0.0.0/0).'
     Type: String
     Default: ''
   ManagedPolicyArns:
@@ -141,42 +156,44 @@ Parameters:
     Default: ''
 Mappings:
   RegionMap:
+    'af-south-1':
+      AMI: 'ami-0b4a93eff849f20ca'
     'eu-north-1':
-      AMI: 'ami-0c947472aff72870d'
+      AMI: 'ami-0b7a46b4bd694e8a6'
     'ap-south-1':
-      AMI: 'ami-040c7ad0a93be494e'
+      AMI: 'ami-0470e33cd681b2476'
     'eu-west-3':
-      AMI: 'ami-05a51ff00c1d77571'
+      AMI: 'ami-00077e3fed5089981'
     'eu-west-2':
-      AMI: 'ami-00e8b55a2e841be44'
+      AMI: 'ami-01a6e31ac994bbc09'
     'eu-west-1':
-      AMI: 'ami-040ba9174949f6de4'
+      AMI: 'ami-06ce3edf0cff21f07'
     'ap-northeast-2':
-      AMI: 'ami-02b3330196502d247'
+      AMI: 'ami-01288945bd24ed49a'
     'me-south-1':
-      AMI: 'ami-0207e6a966ca96048'
+      AMI: 'ami-0fde637e0db57a2ab'
     'ap-northeast-1':
-      AMI: 'ami-0064e711cbc7a825e'
+      AMI: 'ami-0f310fced6141e627'
     'sa-east-1':
-      AMI: 'ami-053f8b6627112b46e'
+      AMI: 'ami-003449ffb2605a74c'
     'ca-central-1':
-      AMI: 'ami-007dbcbce3118978b'
+      AMI: 'ami-054362537f5132ce2'
     'ap-east-1':
-      AMI: 'ami-ff4d378e'
+      AMI: 'ami-dd7731ac'
     'ap-southeast-1':
-      AMI: 'ami-00942d7cd4f3ca5c0'
+      AMI: 'ami-0ec225b5e01ccb706'
     'ap-southeast-2':
-      AMI: 'ami-08a74056dfd30c986'
+      AMI: 'ami-0970010f37c4f9c8d'
     'eu-central-1':
-      AMI: 'ami-0f3a43fbf2d3899f7'
+      AMI: 'ami-076431be05aaf8080'
     'us-east-1':
-      AMI: 'ami-00dc79254d0461090'
+      AMI: 'ami-0323c3dd2da7fb37d'
     'us-east-2':
-      AMI: 'ami-00bf61217e296b409'
+      AMI: 'ami-0f7919c33c90f5b58'
     'us-west-1':
-      AMI: 'ami-024c80694b5b3e51a'
+      AMI: 'ami-06fcc1f0bc2c8943f'
     'us-west-2':
-      AMI: 'ami-0a85857bfc5345c38'
+      AMI: 'ami-0d6621c01e8c2de2c'
 Conditions:
   HasKeyName: !Not [!Equals [!Ref KeyName, '']]
   HasIAMUserSSHAccess: !Equals [!Ref IAMUserSSHAccess, 'true']
@@ -186,8 +203,11 @@ Conditions:
   HasAlertTopic: !Not [!Equals [!Ref ParentAlertStack, '']]
   HasZone: !Not [!Equals [!Ref ParentZoneStack, '']]
   HasIngressTcpPort1: !Not [!Equals [!Ref IngressTcpPort1, '']]
+  HasIngressTcpParentClientStack1: !Not [!Equals [!Ref IngressTcpParentClientStack1, '']]
   HasIngressTcpPort2: !Not [!Equals [!Ref IngressTcpPort2, '']]
+  HasIngressTcpParentClientStack2: !Not [!Equals [!Ref IngressTcpParentClientStack2, '']]
   HasIngressTcpPort3: !Not [!Equals [!Ref IngressTcpPort3, '']]
+  HasIngressTcpParentClientStack3: !Not [!Equals [!Ref IngressTcpParentClientStack3, '']]
   HasClientSecurityGroup1: !Not [!Equals [!Ref ParentClientStack1, '']]
   HasClientSecurityGroup2: !Not [!Equals [!Ref ParentClientStack2, '']]
   HasClientSecurityGroup3: !Not [!Equals [!Ref ParentClientStack3, '']]
@@ -259,7 +279,8 @@ Resources:
       IpProtocol: tcp
       FromPort: !Ref IngressTcpPort1
       ToPort: !Ref IngressTcpPort1
-      CidrIp: '0.0.0.0/0'
+      SourceSecurityGroupId: !If [HasIngressTcpParentClientStack1, {'Fn::ImportValue': !Sub '${IngressTcpParentClientStack1}-ClientSecurityGroup'}, !Ref 'AWS::NoValue']
+      CidrIp: !If [HasIngressTcpParentClientStack1, !Ref 'AWS::NoValue', '0.0.0.0/0']
   SecurityGroupIngressTcpPort2:
     Type: 'AWS::EC2::SecurityGroupIngress'
     Condition: HasIngressTcpPort2
@@ -268,7 +289,8 @@ Resources:
       IpProtocol: tcp
       FromPort: !Ref IngressTcpPort2
       ToPort: !Ref IngressTcpPort2
-      CidrIp: '0.0.0.0/0'
+      SourceSecurityGroupId: !If [HasIngressTcpParentClientStack2, {'Fn::ImportValue': !Sub '${IngressTcpParentClientStack2}-ClientSecurityGroup'}, !Ref 'AWS::NoValue']
+      CidrIp: !If [HasIngressTcpParentClientStack2, !Ref 'AWS::NoValue', '0.0.0.0/0']
   SecurityGroupIngressTcpPort3:
     Type: 'AWS::EC2::SecurityGroupIngress'
     Condition: HasIngressTcpPort3
@@ -277,7 +299,8 @@ Resources:
       IpProtocol: tcp
       FromPort: !Ref IngressTcpPort3
       ToPort: !Ref IngressTcpPort3
-      CidrIp: '0.0.0.0/0'
+      SourceSecurityGroupId: !If [HasIngressTcpParentClientStack3, {'Fn::ImportValue': !Sub '${IngressTcpParentClientStack3}-ClientSecurityGroup'}, !Ref 'AWS::NoValue']
+      CidrIp: !If [HasIngressTcpParentClientStack3, !Ref 'AWS::NoValue', '0.0.0.0/0']
   InstanceProfile:
     Type: 'AWS::IAM::InstanceProfile'
     Properties:
